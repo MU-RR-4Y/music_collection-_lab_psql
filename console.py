@@ -4,9 +4,9 @@ from models.album import Album
 import repositories.artist_repository as artist_repository
 import repositories.album_repository as album_repository
 
-# delete prior entries of artist in DB
-artist_repository.delete_all()
+# delete prior entries of artist in DB - album delete needs to be called 1st as it requires artist!!
 album_repository.delete_all()
+artist_repository.delete_all()
 
 # add artists using.save()
 artist_1 = Artist('Dave', 30)
@@ -31,17 +31,48 @@ album_repository.save(album_5)
 album_repository.save(album_6)
 
 
-
-
-
-
-# Return results in terminal to valiadate
+print('Return results fo select_all() to valiadate')
+print('----ARTISTS----')
 result = artist_repository.select_all()
 for artist in result:
     print(artist.__dict__)
-
+print('----ALBUMS----')
 result = album_repository.select_all()
 for album in result:
     print(album.__dict__)
+
+print('-------------------------------')
+print('Return results for select by ID')
+print('-------------------------------')
+artist = artist_repository.select(2)
+print(artist.__dict__)
+   
+album =album_repository.select(4)
+print(album.__dict__)
+
+print('--------------------------')
+print('Return results for update')
+print('--------------------------')
+
+artist_1.name ='Tom'
+artist_1.age = 35
+artist_repository.update(artist_1)
+print(artist_1.__dict__)
+
+album_1.name = 'A soundtrack to Tom'
+album_1.songs = 5
+album_1.genre = 'Motown'
+album_1.artist = artist_1
+
+print(album_1.__dict__)
+
+print('----------------------------------------------------------------')
+print('Return results for list of songs per artist - requested for Rick')
+print('----------------------------------------------------------------')
+
+albums = artist_repository.albums(artist_2)
+for album in albums:
+    print(album.__dict__)
+
 
 pdb.set_trace()

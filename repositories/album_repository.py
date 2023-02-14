@@ -44,10 +44,20 @@ def select(id):
 
 
 
-
-
-
 # DELETE ALBUMS
 def delete_all():
     sql = "DELETE  FROM albums"
     run_sql(sql)
+
+def delete(id):
+    sql = "DELETE  FROM albums WHERE id = %s" 
+    values = [id]
+    run_sql(sql, values)
+
+
+# EDIT ALBUM
+
+def update(album):
+    sql = """UPDATE albums SET (name, songs, genre, artist_id) = (%s, %s, %s, %s) WHERE id = %s"""
+    values =[album.name, album.songs, album.genre, album.artist.id, album.id]
+    run_sql(sql,values)
