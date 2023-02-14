@@ -27,10 +27,9 @@ def select(id):
     artist = None
     sql = """SELECT * FROM artists WHERE id = %s"""
     values = [id]
-    results = run_sql(sql,values)
+    results = run_sql(sql,values)[0]
     if results:
-        result = results[0]
-        artist = Artist(result['name'], result['age'], result['id'])
+        artist = Artist(results['name'], results['age'], results['id'])
     return artist
 
 
